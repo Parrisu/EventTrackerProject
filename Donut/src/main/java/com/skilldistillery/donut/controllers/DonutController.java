@@ -70,7 +70,7 @@ public class DonutController {
 		if (donutServ.getDonutById(id)!=null) {
 			try {
 				updateDonut = donutServ.updateDonut(id, donut);
-				res.setStatus(201);
+				res.setStatus(200);
 				res.setHeader("Location", req.getRequestURL().append("/").append(updateDonut.getId()).toString());
 			} catch (Exception e) {
 				e.printStackTrace();
