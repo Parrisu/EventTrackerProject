@@ -32,7 +32,12 @@ public class DonutServiceImpl implements DonutService {
 
 	@Override
 	public Donut createDonut(Donut donut) {
-		donutRepo.save(donut);
+		try {
+			donutRepo.save(donut);
+		} catch (Exception e) {
+			e.printStackTrace();
+			donut = null;
+		}
 		return donut;
 	}
 

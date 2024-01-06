@@ -20,20 +20,20 @@ import jakarta.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("api")
 public class DonutController {
-	
+
 	@Autowired
 	DonutService donutServ;
-	
-	@GetMapping("donuts")
-	public List<Donut> getDonuts(){
+
+	@GetMapping({ "donuts", "donuts/" })
+	public List<Donut> getDonuts() {
 		return donutServ.getDonutList();
 	}
-	
+
 	@GetMapping("donuts/{id}")
-	public Donut getDonut(@PathVariable("id")int id, HttpServletResponse res) {
+	public Donut getDonut(@PathVariable("id") int id, HttpServletResponse res) {
 		Donut donut = donutServ.getDonutById(id);
-		
-		if(donut != null && donut.isEnabled()==true) {
+
+		if (donut != null && donut.isEnabled() == true) {
 			res.setStatus(200);
 		} else {
 			res.setStatus(404);
@@ -41,26 +41,41 @@ public class DonutController {
 		}
 		return donut;
 	}
-	
-	@PostMapping("donuts/create")
+
+	@PostMapping({ "donuts", "donuts/" })
 	public Donut addDonut(@RequestBody Donut donut, HttpServletResponse res) {
-		Donut newDonut = donutServ.createDonut(donut);
+		Donut newDonut = null;
+		try {
+			newDonut = donutServ.createDonut(donut);
+			if(newDonut == null) {
+				throw new Exception();
+			}
+			res.setStatus(201);
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setStatus(500);
+		}
 		return newDonut;
 	}
-	
+
 	@PutMapping("donuts/{id}")
-	public Donut updateDonut(@PathVariable("id")int id, @RequestBody Donut donut, HttpServletResponse res) {
-		Donut updateDonut = donutServ.updateDonut(id, donut);
+	public Donut updateDonut(@PathVariable("id") int id, @RequestBody Donut donut, HttpServletResponse res) {
+		Donut updateDonut = null;
+		try {
+			updateDonut = donutServ.updateDonut(id, donut);
+			res.setStatus(201);
+		} catch (Exception e) {
+			e.printStackTrace();
+			res.setStatus(500);
+		}
+
 		return updateDonut;
-		
-		
+
 	}
-	
+
 	@DeleteMapping("donuts/{id}")
-	public boolean deleteDonut(@PathVariable("id")int id, HttpServletResponse res) {
+	public boolean deleteDonut(@PathVariable("id") int id, HttpServletResponse res) {
 		return donutServ.deleteDonut(id);
 	}
-	
-	
 
 }
