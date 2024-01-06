@@ -57,7 +57,7 @@ public class DonutController {
 			res.setHeader("Location", req.getRequestURL().append("/").append(newDonut.getId()).toString());
 		} catch (Exception e) {
 			e.printStackTrace();
-			res.setStatus(500);
+			res.setStatus(400);
 		}
 		return newDonut;
 	}
@@ -73,7 +73,7 @@ public class DonutController {
 			res.setHeader("Location", req.getRequestURL().append("/").append(updateDonut.getId()).toString());
 		} catch (Exception e) {
 			e.printStackTrace();
-			res.setStatus(500);
+			res.setStatus(400);
 		}
 
 		return updateDonut;
