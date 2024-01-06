@@ -67,13 +67,17 @@ public class DonutController {
 			HttpServletRequest req
 			) {
 		Donut updateDonut = null;
-		try {
-			updateDonut = donutServ.updateDonut(id, donut);
-			res.setStatus(201);
-			res.setHeader("Location", req.getRequestURL().append("/").append(updateDonut.getId()).toString());
-		} catch (Exception e) {
-			e.printStackTrace();
-			res.setStatus(400);
+		if (donutServ.getDonutById(id)!=null) {
+			try {
+				updateDonut = donutServ.updateDonut(id, donut);
+				res.setStatus(201);
+				res.setHeader("Location", req.getRequestURL().append("/").append(updateDonut.getId()).toString());
+			} catch (Exception e) {
+				e.printStackTrace();
+				res.setStatus(400);
+			}
+		} else {
+			res.setStatus(404);
 		}
 
 		return updateDonut;
@@ -82,7 +86,14 @@ public class DonutController {
 
 	@DeleteMapping("donuts/{id}")
 	public boolean deleteDonut(@PathVariable("id") int id, HttpServletResponse res) {
-		return donutServ.deleteDonut(id);
+		boolean deleted = false;
+		if(donutServ.getDonutById(id)!=null) {
+			deleted = donutServ.deleteDonut(id);
+			res.setStatus(204);
+		} else {
+			res.setStatus(404);
+		}
+		return deleted;
 	}
 
 }
