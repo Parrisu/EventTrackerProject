@@ -9,5 +9,9 @@ public interface DonutService {
 	List<Donut> getDonutList();
 	
 	Donut getDonutById(int id);
+	
+	Donut createDonut(Donut donut);
+	
+	boolean deleteDonut(int id);
 
 }

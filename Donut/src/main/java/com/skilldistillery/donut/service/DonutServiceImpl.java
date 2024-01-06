@@ -24,6 +24,24 @@ public class DonutServiceImpl implements DonutService {
 		return donutRepo.findById(id);
 	}
 
+	@Override
+	public Donut createDonut(Donut donut) {
+		donutRepo.save(donut);
+		return donut;
+	}
+
+	@Override
+	public boolean deleteDonut(int id) {
+		boolean isDeleted = false;
+		
+		if(donutRepo.existsById(id)) {
+			donutRepo.deleteById(id);
+			isDeleted = true;
+		}
+		
+		return isDeleted;
+	}
+
 	
 	
 }
