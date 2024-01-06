@@ -37,7 +37,7 @@ The database schema is simple with two tables. One for donuts and one for stores
 
 The `store_id` is a `FOREIGN KEY` linked to the `id` of the `store` table.
 
-![image](https://github.com/Deonnaa/MidtermProject/blob/main/photos/EntityRelationshipDiagram.png)
+![image](https://github.com/Parrisu/EventTrackerProject/blob/main/images/donutSchema.png)
 
 
 ### Technologies and Methodologies Used
