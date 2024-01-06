@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.skilldistillery.donut.entities.Donut;
 import com.skilldistillery.donut.service.DonutService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
@@ -43,7 +44,9 @@ public class DonutController {
 	}
 
 	@PostMapping({ "donuts", "donuts/" })
-	public Donut addDonut(@RequestBody Donut donut, HttpServletResponse res) {
+	public Donut addDonut(@RequestBody Donut donut, HttpServletResponse res,
+			HttpServletRequest req
+			) {
 		Donut newDonut = null;
 		try {
 			newDonut = donutServ.createDonut(donut);
@@ -51,6 +54,7 @@ public class DonutController {
 				throw new Exception();
 			}
 			res.setStatus(201);
+			res.setHeader("Location", req.getRequestURL().append("/").append(newDonut.getId()).toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 			res.setStatus(500);
@@ -59,11 +63,14 @@ public class DonutController {
 	}
 
 	@PutMapping("donuts/{id}")
-	public Donut updateDonut(@PathVariable("id") int id, @RequestBody Donut donut, HttpServletResponse res) {
+	public Donut updateDonut(@PathVariable("id") int id, @RequestBody Donut donut, HttpServletResponse res,
+			HttpServletRequest req
+			) {
 		Donut updateDonut = null;
 		try {
 			updateDonut = donutServ.updateDonut(id, donut);
 			res.setStatus(201);
+			res.setHeader("Location", req.getRequestURL().append("/").append(updateDonut.getId()).toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 			res.setStatus(500);
