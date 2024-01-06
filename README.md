@@ -1,7 +1,7 @@
 <h2 align="center">
     <a href="#" target="blank_">
-        <img height="100" alt="Quorum Logo" src=
-        ""/>
+        <img height="200" alt="Donut Logo" src=
+        "https://github.com/Parrisu/EventTrackerProject/blob/main/images/donutimg.png"/>
     </a>
     <br>
     Love The Sweetness
