@@ -35,7 +35,10 @@ As a user, you can:
 #### Database
 The database schema is simple with two tables. One for donuts and one for stores.
 
-The `store_id` is a `FOREIGN KEY` linked to the `id` of the `store` table.
+The `store_id` is a `FOREIGN KEY` linked to the `id` of the `store` table.<br>
+The <a href="https://github.com/Parrisu/EventTrackerProject/blob/main/JPADonut/src/main/java/com/skilldistillery/donut/entities/Store.java">`store`</a>  is the owner of the relationship, using the 
+`@OneToMany`
+bilateral relationship to <a href="https://github.com/Parrisu/EventTrackerProject/blob/main/JPADonut/src/main/java/com/skilldistillery/donut/entities/Store.java">`donut`</a> which uses `@ManyToOne`.
 
  <img height="300" alt="Donut Logo" src=
         "https://github.com/Parrisu/EventTrackerProject/blob/main/images/donutSchema.png"/>
@@ -52,6 +55,17 @@ Backend: Spring, Spring Boot <br>
 Configuration Management: Git <br>
 IDE: STS4, Eclipse, VSCode <br>
 Additional Software: Postman <br>
+
+### Overview
+| HTTP Verb | URI               | Request Body | Response Body | Status Codes |
+|-----------|-------------------|--------------|---------------|---------|
+| GET       | `/api/donuts`     |              | List of all _donut_ entities | 200 |
+| GET       | `/api/donuts/7`   |              | JSON of _donut_ `7` | 200,404 |
+| POST      | `/api/donuts`     | JSON of a new _donut_ entity  | JSON of created _donut_ | 201,400 |
+| PUT       | `/api/donuts/7`   | JSON of a new version of _donut_ `7` | JSON of updated _donut_ | 200,404,400 |
+| DELETE    | `/api/donuts/17`  |              |               | 204,404,400|
+
+
 
 ### Lessons Learned
 --
