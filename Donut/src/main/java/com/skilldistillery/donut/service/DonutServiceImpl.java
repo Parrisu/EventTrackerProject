@@ -16,7 +16,13 @@ public class DonutServiceImpl implements DonutService {
 
 	@Override
 	public List<Donut> getDonutList() {
-		return donutRepo.findAll();
+		List<Donut> donuts = donutRepo.findAll();
+		for (int i = 0; i<donuts.size(); i++) {
+			if(donuts.get(i).isEnabled()==false) {
+				donuts.remove(i);
+			}
+		}
+		return donuts;
 	}
 
 	@Override

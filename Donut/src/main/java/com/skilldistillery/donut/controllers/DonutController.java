@@ -33,12 +33,12 @@ public class DonutController {
 	public Donut getDonut(@PathVariable("id")int id, HttpServletResponse res) {
 		Donut donut = donutServ.getDonutById(id);
 		
-		if(donut != null) {
+		if(donut != null && donut.isEnabled()==true) {
 			res.setStatus(200);
 		} else {
 			res.setStatus(404);
+			donut = null;
 		}
-		
 		return donut;
 	}
 	
