@@ -13,5 +13,7 @@ public interface DonutService {
 	Donut createDonut(Donut donut);
 	
 	boolean deleteDonut(int id);
+	
+	Donut updateDonut(int id, Donut donut);
 
 }

@@ -33,13 +33,28 @@ public class DonutServiceImpl implements DonutService {
 	@Override
 	public boolean deleteDonut(int id) {
 		boolean isDeleted = false;
+		Donut deactivate = donutRepo.findById(id);
 		
-		if(donutRepo.existsById(id)) {
-			donutRepo.deleteById(id);
-			isDeleted = true;
+		if(deactivate != null) {
+			deactivate.setEnabled(false);
+			donutRepo.save(deactivate);
+			if(!donutRepo.findById(id).isEnabled()) {
+				isDeleted = true;
+			}
 		}
 		
 		return isDeleted;
+	}
+
+	@Override
+	public Donut updateDonut(int id, Donut donut) {
+		Donut updateDonut = donutRepo.findById(id);
+		updateDonut.setName(donut.getName());
+		updateDonut.setPrice(donut.getPrice());
+		updateDonut.setCalories(donut.getCalories());
+		updateDonut.setStore(donut.getStore());
+		donutRepo.save(updateDonut);
+		return updateDonut;
 	}
 
 	
