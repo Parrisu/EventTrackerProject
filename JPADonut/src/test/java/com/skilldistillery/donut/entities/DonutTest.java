@@ -23,7 +23,7 @@ class DonutTest {
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		emf = Persistence.createEntityManagerFactory("JPAEventTracker");
+		emf = Persistence.createEntityManagerFactory("JPADonut");
 	}
 
 	@AfterAll

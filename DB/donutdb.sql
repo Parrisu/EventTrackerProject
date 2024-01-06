@@ -20,7 +20,7 @@ CREATE TABLE donut (
   name VARCHAR(50) NOT NULL,
   price DECIMAL(65) DEFAULT 0.00,
   calories INT(255),
-  enabled SMALLINT NOT NULL,
+  enabled BOOL NOT NULL DEFAULT 1,
   store_id INTEGER NOT NULL,
   create_date DATE,
   last_update DATE,
