@@ -46,9 +46,9 @@ class DonutTest {
 	
 	@Test
 	void test_donut_mapping() {
-		assertEquals("Glazed", donut.getName());
-		assertEquals(2, donut.getPrice());
-		assertEquals(1000, donut.getCalories());
+		assertEquals("Glazed Donut", donut.getName());
+		assertEquals(2.49, donut.getPrice());
+		assertEquals(240, donut.getCalories());
 		assertEquals(2024, donut.getCreatedAt().getYear());
 		assertEquals(Month.JANUARY, donut.getCreatedAt().getMonth());
 		assertEquals(5, donut.getUpdatedAt().getDayOfMonth());
