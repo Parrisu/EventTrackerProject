@@ -41,9 +41,8 @@ I chose to remove Update, Delete, and Create for stores.
 The schema below shows the two tables. One for donuts and one for stores.
 
 The `store_id` is a `FOREIGN KEY` linked to the `id` of the `store` table.<br>
-The <a href="https://github.com/Parrisu/EventTrackerProject/blob/main/JPADonut/src/main/java/com/skilldistillery/donut/entities/Store.java">`store`</a>  is the owner of the relationship, using the 
-`@OneToMany`
-bilateral relationship to <a href="https://github.com/Parrisu/EventTrackerProject/blob/main/JPADonut/src/main/java/com/skilldistillery/donut/entities/Store.java">`donut`</a> which uses `@ManyToOne`.
+The <a href="https://github.com/Parrisu/EventTrackerProject/blob/main/JPADonut/src/main/java/com/skilldistillery/donut/entities/Store.java">`donut`</a> is the owner of the relationship, which uses `@ManyToOne` bilateral relationship to
+ the <a href="https://github.com/Parrisu/EventTrackerProject/blob/main/JPADonut/src/main/java/com/skilldistillery/donut/entities/Store.java">`store`</a> that uses `@OneToMany`.
 
  <img height="300" alt="Donut Logo" src=
         "https://github.com/Parrisu/EventTrackerProject/blob/main/images/donutSchema.png"/>
@@ -79,10 +78,10 @@ IDE: STS4, Eclipse <br>
     There were two big things I took away from this project. The first being HTTP Requests and how they are used. The second coming from the JpaRepository interface.
 </p>
 <p>
-    HTTP Requests are made of four pieces. A request line, header, blank line, and optional body. The request line is the standard methods such as GET, POST, UDATE, or DELETE. Next would be your request header that has the ability to pass information about that request. A blank line follows to indicate the end of the said header. Finally an optional body that is used to send data with it. 
+    HTTP Requests are made of four pieces. A request line, header, blank line, and optional body. The request lines are the standard methods such as GET, POST, UDATE, or DELETE. Next would be your request header that has the ability to pass information about that request. A blank line follows to indicate the end of the said header. Finally an optional body that is used to send data with it. 
 </p>
  <p>
- The data sent with requests for this project are in the form of <strong>JSON</strong>. Spring uses the Jackson Library jar files convert the JSON(JavaScript Object Notation) to a POJO(Plain Old Java Object), which I can then use to interact with the database. This is also done in reverse order to return a JSON of a POJO.</p>
+ The data sent with requests for this project are in the form of <strong>JSON</strong>. Spring uses the Jackson Library jar files convert the JSON(JavaScript Object Notation) to a POJO(Plain Old Java Object), which I can then use to interact with the database. This can also be done in reverse order to return a JSON of a POJO.</p>
  <p>
     The JpaRepository seemed like it would be the most difficult part, but ended up easier to use than a DAO. By extending the JpaRepository, I was able to construct methods in the form of a query. While it is limited to a single entity class, the separation of entities reduces the confusion. To access these methods, I used a Service class that implements the logic. 
  </p>
@@ -90,6 +89,7 @@ IDE: STS4, Eclipse <br>
 
 ### Stretch Goals
 -- Filter Donuts by Store (completed)
+-- JUnit Tests for Repository and Service
 
 <br>
 Thanks for checking it out!
