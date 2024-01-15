@@ -62,10 +62,9 @@ function findStores(){
 	xhr.send();
 };
 
-let submitCB = function(e){
+function submitCB(e){
 	e.preventDefault();
-	let form = submit.parentElement;
-	
+	let form = e.target.parentElement;
 	let inputPrice = parseFloat(form.price.value).toFixed(2);
 	
 	let donut = {
@@ -106,6 +105,12 @@ let submitCB = function(e){
 	xhr.send(newDonut);
 };
 
+function findButton(){
+	let submit = document.donutForm.button;
+	console.log(submit)
+	submit.addEventListener('click', submitCB);
+}
+
 function deleteDonut(id){
 	let xhr = new XMLHttpRequest();
 
@@ -115,7 +120,6 @@ function deleteDonut(id){
 		if(xhr.readyState === 4){
 			if(xhr.status=== 204){
 				document.updateForm.style.display = 'none';
-				xhr = null;
 				init();
 			}
 		}
@@ -146,11 +150,7 @@ function updateDonut(id, fixedDonut){
 	xhr.send(toUpdate);
 }
 
-function findButton(){
-	let submit = document.donutForm.button;
 
-	submit.addEventListener('click', submitCB)
-}
 
 function getDonutById(donutId){
 	let tbody = document.getElementById('body');
@@ -170,7 +170,6 @@ function getDonutById(donutId){
 			if(xhr.status === 200){}
 			let donut = JSON.parse(xhr.responseText);
 			getDonutDetail(donut);
-			xhr = null;
 		} else {
 			console.log('Donut not found')
 		}
