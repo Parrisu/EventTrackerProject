@@ -130,7 +130,6 @@ function updateDonut(fixedDonut){
 		if (xhr.readyState === 4){
 			if(xhr.status === 201 || xhr.status === 200){
 				let data = JSON.parse(xhr.responseText);
-				console.log(data)
 				init();
 			} else {
 				console.error("PUT request failed")
@@ -224,7 +223,6 @@ function getDonutById(donutId){
 		deleteBTN.addEventListener('click', e=>{
 			e.preventDefault();
 			deleteDonut(donut.id);
-			console.log('delete')
 			buttons.replaceChildren('')
 			
 		})
@@ -317,18 +315,14 @@ function displayDonuts(donuts){
 		total_amount += parseFloat(rows[i].children[2].textContent);
 		total_calories += parseInt(rows[i].children[3].textContent);
 	}
-	
+	let totals = [];
 	let h3 = document.createElement('h3');
-	h3.textContent = "Total Amount Spent: " + total_amount
-	editingDiv.appendChild(h3)
+	h3.textContent = "Total Amount Spent: " + total_amount.toFixed(2)
+	totals.push(h3);
 	let h32 = document.createElement('h3');
 	h32.textContent = "Total Calories Consumed: " + total_calories
-	editingDiv.appendChild(h32)
-	console.log(total_amount)
-	console.log(total_calories)
-
-
-
+	totals.push(h32)
+	editingDiv.replaceChildren(...totals)
 
 	table_row.replaceChildren(...headers);
 	table_head.replaceChildren(table_row);
