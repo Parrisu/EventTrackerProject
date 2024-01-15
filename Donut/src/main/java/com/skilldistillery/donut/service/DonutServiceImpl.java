@@ -47,11 +47,8 @@ public class DonutServiceImpl implements DonutService {
 		Donut deactivate = donutRepo.findById(id);
 		
 		if(deactivate != null) {
-			deactivate.setEnabled(false);
-			donutRepo.save(deactivate);
-			if(!donutRepo.findById(id).isEnabled()) {
-				isDeleted = true;
-			}
+			donutRepo.deleteById(id);
+			isDeleted = !donutRepo.existsById(id);
 		}
 		
 		return isDeleted;
