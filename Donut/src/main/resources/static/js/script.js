@@ -7,11 +7,8 @@ function toTitleCase(str) {
   );
 }
 
-
 window.addEventListener('load', e => {
-	
 	setTimeout(init(), 0);
-	// setTimeout(findStores(), 0);
 	setTimeout(findButton(), 0);
 });
 
@@ -25,6 +22,8 @@ function init(){
 				if(xhr.status === 200){
 					let donuts = JSON.parse(xhr.responseText);
 					displayDonuts(donuts);
+				} else {
+					console.log(xhr.status +": " + xhr.response);
 				}
 			};
 		};
@@ -32,29 +31,6 @@ function init(){
 		xhr.open('GET', '/api/donuts');
 		
 		xhr.send();
-};
-
-
-let findStores = function(){
-	let stores;
-	let xhr = new XMLHttpRequest();
-	
-	xhr.open('GET', 'api/stores');
-	
-	xhr.onreadystatechange = function(){
-		if(xhr.readyState === 4){
-			if(xhr.status === 200){
-				stores = JSON.parse(xhr.responseText);
-				
-				
-			} else {
-				console.error('GET request failed')
-				console.error(xhr.status + ": " + xhr.responseText);
-			}
-		}
-	}	
-	
-	xhr.send();
 };
 
 function submitCB(e){
@@ -116,9 +92,11 @@ function deleteDonut(id){
 
 	xhr.send();
 }
+
 function updateDonut(fixedDonut){
 	
 	let xhr = new XMLHttpRequest();
+
 	xhr.open('PUT', 'api/donuts/'+ fixedDonut.id)
 	
 	xhr.setRequestHeader("Content-type", "application/json");
@@ -236,26 +214,9 @@ function getDonutById(donutId){
 
 		buttons.replaceChildren(deleteBTN, backBTN)
 
-
-
-
 	}
-
-
-	
-	
-
-
-
 	
 };
-
-
-// donuts.forEach(donut => {
-// 	console.log({ donut })
-// })
-
-
 
 function displayDonuts(donuts){ 
 
@@ -270,7 +231,7 @@ function displayDonuts(donuts){
 	for(let donut of donuts){
 		let tr = document.createElement('tr');
 		
-		for(let prop in donut){ // table headers
+		for(let prop in donut){ 
 			if(count < 8){
 				let thname = document.createElement('th');
 				thname.textContent = toTitleCase(prop);
@@ -279,9 +240,9 @@ function displayDonuts(donuts){
 			}
 			
 			let td = document.createElement('td');
-			if(typeof donut[prop] === 'object'){ // store > id
+			if(typeof donut[prop] === 'object'){
 				td.textContent = donut[prop].id;
-			} else if (donut[prop] == donut.createdAt){ // date > truncated
+			} else if (donut[prop] == donut.createdAt){ 
 				let newDate = new Date(donut[prop]);
 				var y = newDate.getFullYear().toString();
 			    var m = (newDate.getMonth() + 1).toString();
@@ -289,7 +250,6 @@ function displayDonuts(donuts){
 			    (d.length == 1) && (d = '0' + d);
 			    (m.length == 1) && (m = '0' + m);
 				newDate = `${d}-${m}-${y}`
-			    // newDate = d +"-"+ m +"-"+ y;
 				td.textContent = newDate;
 			} else {
 				td.textContent = donut[prop];
@@ -301,7 +261,6 @@ function displayDonuts(donuts){
 			tr.appendChild(td);
 			
 		}
-		// table_body.appendChild(tr);
 		
 		rows.push(tr)	
 	}
@@ -319,11 +278,12 @@ function displayDonuts(donuts){
 	let h3 = document.createElement('h3');
 	h3.textContent = "Total Amount Spent: " + total_amount.toFixed(2)
 	totals.push(h3);
+
 	let h32 = document.createElement('h3');
 	h32.textContent = "Total Calories Consumed: " + total_calories
 	totals.push(h32)
-	editingDiv.replaceChildren(...totals)
 
+	editingDiv.replaceChildren(...totals)
 	table_row.replaceChildren(...headers);
 	table_head.replaceChildren(table_row);
 	table_body.replaceChildren(...rows)
