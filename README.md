@@ -75,7 +75,7 @@ IDE: STS4, Eclipse <br>
 
 ### Lessons Learned
 <p>
-    There were two big things I took away from this project. The first being HTTP Requests and how they are used. The second coming from the JpaRepository interface.
+    There were two big things I took away from the first half project. The first being HTTP Requests and how they are used. The second coming from the JpaRepository interface.
 </p>
 <p>
     HTTP Requests are made of four pieces. A request line, header, blank line, and optional body. The request lines are the standard methods such as GET, POST, UDATE, or DELETE. Next would be your request header that has the ability to pass information about that request. A blank line follows to indicate the end of the said header. Finally an optional body that is used to send data with it. 
@@ -85,6 +85,16 @@ IDE: STS4, Eclipse <br>
  <p>
     The JpaRepository seemed like it would be the most difficult part, but ended up easier to use than a DAO. By extending the JpaRepository, I was able to construct methods in the form of a query. While it is limited to a single entity class, the separation of entities reduces the confusion. To access these methods, I used a Service class that implements the logic. 
  </p>
+<br>
+<p>
+    For the second half, I implimented AJAX to have a working webpage auto-update with information from the database.
+</p>
+<p>
+    This had me scratching my head a bit, thinking about the event que and how to order functions within the page. The main lesson from this part, was making sure I called upon the target of the element passed through an `eventListener`. Too many times I could not figure out why my data was showing up undefined. 
+ ``` e.target.parentElement ``` 
+    
+</p>
+
 
 
 ### Stretch Goals
