@@ -11,7 +11,7 @@ function toTitleCase(str) {
 window.addEventListener('load', e => {
 	
 	setTimeout(init(), 0);
-	setTimeout(findStores(), 0);
+	// setTimeout(findStores(), 0);
 	setTimeout(findButton(), 0);
 });
 
@@ -25,8 +25,6 @@ function init(){
 				if(xhr.status === 200){
 					let donuts = JSON.parse(xhr.responseText);
 					displayDonuts(donuts);
-				} else {
-					console.log('failed')
 				}
 			};
 		};
@@ -36,11 +34,8 @@ function init(){
 		xhr.send();
 };
 
-const getDonutDetails = (donutId) => donutId ? getDonutById(donutId) : console.error('no donut id')
-// <------
 
-
-function findStores(){
+let findStores = function(){
 	let stores;
 	let xhr = new XMLHttpRequest();
 	
@@ -77,11 +72,6 @@ function submitCB(e){
 		},	
 	};
 
-	console.log({ // <----
-		donut,
-		form,
-	});
-	
 	let xhr = new XMLHttpRequest();
 	
 	xhr.open('POST', 'api/donuts/')
@@ -94,6 +84,7 @@ function submitCB(e){
 		if (xhr.readyState === 4){
 			if(xhr.status === 201 || xhr.status === 200){
 				let data = JSON.parse(xhr.responseText);
+				form.reset();
 				init();
 			} else {
 				console.error("POST request failed")
@@ -101,13 +92,11 @@ function submitCB(e){
 			};
 		}
 	}
-	
 	xhr.send(newDonut);
 };
 
 function findButton(){
 	let submit = document.donutForm.button;
-	console.log(submit)
 	submit.addEventListener('click', submitCB);
 }
 
@@ -127,18 +116,21 @@ function deleteDonut(id){
 
 	xhr.send();
 }
-function updateDonut(id, fixedDonut){
+function updateDonut(fixedDonut){
+	
 	let xhr = new XMLHttpRequest();
-	xhr.open('PUT', 'api/donuts/'+ id)
+	xhr.open('PUT', 'api/donuts/'+ fixedDonut.id)
 	
 	xhr.setRequestHeader("Content-type", "application/json");
 	
 	let toUpdate = JSON.stringify(fixedDonut);
+
 	
 	xhr.onreadystatechange = function(){
 		if (xhr.readyState === 4){
 			if(xhr.status === 201 || xhr.status === 200){
 				let data = JSON.parse(xhr.responseText);
+				console.log(data)
 				init();
 			} else {
 				console.error("PUT request failed")
@@ -151,15 +143,29 @@ function updateDonut(id, fixedDonut){
 }
 
 
+let updateCB = function(e){
+	e.preventDefault();
+	let form = e.target.parentElement;
+	let updatedDonut = null;
+	updatedDonut = {
+		id: form.id.value,
+		name: form.name.value,
+		price: form.price.value,
+		calories: form.calories.value,
+		enabled: true,
+		store: {
+			id: form.store.value
+		},
+	}
+	let buttons = document.getElementById('editing')
+	buttons.replaceChildren('')
+	form.reset();
+	updateDonut(updatedDonut)
+	
+}
 
 function getDonutById(donutId){
 	let tbody = document.getElementById('body');
-	// let thead = document.getElementById('head');
-	// thead.replaceChildren("");
-	
-	
-	
-	
 	
 	let xhr = new XMLHttpRequest();
 	
@@ -170,8 +176,6 @@ function getDonutById(donutId){
 			if(xhr.status === 200){}
 			let donut = JSON.parse(xhr.responseText);
 			getDonutDetail(donut);
-		} else {
-			console.log('Donut not found')
 		}
 	};
 	
@@ -191,12 +195,11 @@ function getDonutById(donutId){
 			}
 			arrDonut.push(td);
 		})
-
+		
 		let form = document.updateForm;
 		form.style.display='block';
-		console.log(donut.name)
-
-		form.id.vlaue = donut.id;
+		
+		form.id.value = donut.id;
 		form.name.value = donut.name;
 		form.price.value = donut.price;
 		form.calories.value = donut.calories;
@@ -207,29 +210,15 @@ function getDonutById(donutId){
 		}
 		
 		document.donutForm.style.display='none'
-		console.log(arrDonut)
 		tr.replaceChildren(...arrDonut);
 		tbody.replaceChildren(tr);
-
+		
 		let buttons = document.getElementById('editing')
-
-
-		let updateBTN = document.updateForm.button;
-		updateBTN.addEventListener('click', e=> {
-			e.preventDefault();
-			updatedDonut = {
-				name: form.name.value,
-				price: form.price.value,
-				calories: form.calories.value,
-				enabled: true,
-				store: {
-					id: form.store.value
-				},
-			}
-			updateDonut(donutId, updatedDonut)
-			console.log(updatedDonut)
-
-		})
+		
+		
+		
+		var updateBTN = document.updateForm.button;
+		updateBTN.addEventListener('click', updateCB)
 		let deleteBTN = document.createElement('button')
 		deleteBTN.textContent = 'Delete'
 		deleteBTN.addEventListener('click', e=>{
@@ -237,7 +226,7 @@ function getDonutById(donutId){
 			deleteDonut(donut.id);
 			console.log('delete')
 			buttons.replaceChildren('')
-
+			
 		})
 		let backBTN = document.createElement('button')
 		backBTN.textContent = 'Back'
@@ -270,21 +259,13 @@ function getDonutById(donutId){
 
 
 
-function displayDonuts(donuts){  //2
+function displayDonuts(donuts){ 
 
 	let table_head = document.getElementById('head');
 	let table_row = document.createElement('tr');
-	
 	let table_body = document.getElementById('body');
 	let count = 0;
 
-	
-
-	const donutIds = donuts.map(donut => {
-		return {
-			id: donut.id
-		}
-	})
 	let rows = []
 	let headers = []
 		
@@ -317,8 +298,7 @@ function displayDonuts(donuts){  //2
 			}
 			td.addEventListener('click', e=>{
 				let donutId = e.target.parentElement.firstElementChild.textContent;
-				console.log(donutId)
-				getDonutDetails(donutId);
+				getDonutById(donutId);
 			});
 			tr.appendChild(td);
 			

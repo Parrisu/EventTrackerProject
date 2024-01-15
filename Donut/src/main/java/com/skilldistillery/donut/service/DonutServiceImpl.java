@@ -61,7 +61,7 @@ public class DonutServiceImpl implements DonutService {
 		updateDonut.setPrice(donut.getPrice());
 		updateDonut.setCalories(donut.getCalories());
 		updateDonut.setStore(donut.getStore());
-		donutRepo.save(updateDonut);
+		donutRepo.saveAndFlush(updateDonut);
 		return updateDonut;
 	}
 
