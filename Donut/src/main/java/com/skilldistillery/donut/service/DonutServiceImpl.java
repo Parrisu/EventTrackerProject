@@ -47,11 +47,8 @@ public class DonutServiceImpl implements DonutService {
 		Donut deactivate = donutRepo.findById(id);
 		
 		if(deactivate != null) {
-			deactivate.setEnabled(false);
-			donutRepo.save(deactivate);
-			if(!donutRepo.findById(id).isEnabled()) {
-				isDeleted = true;
-			}
+			donutRepo.deleteById(id);
+			isDeleted = !donutRepo.existsById(id);
 		}
 		
 		return isDeleted;
@@ -64,7 +61,7 @@ public class DonutServiceImpl implements DonutService {
 		updateDonut.setPrice(donut.getPrice());
 		updateDonut.setCalories(donut.getCalories());
 		updateDonut.setStore(donut.getStore());
-		donutRepo.save(updateDonut);
+		donutRepo.saveAndFlush(updateDonut);
 		return updateDonut;
 	}
 

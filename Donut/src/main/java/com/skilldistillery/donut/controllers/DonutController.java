@@ -26,8 +26,14 @@ public class DonutController {
 	DonutService donutServ;
 
 	@GetMapping({ "donuts", "donuts/" })
-	public List<Donut> getDonuts() {
-		return donutServ.getDonutList();
+	public List<Donut> getDonuts(HttpServletResponse res) {
+		List<Donut> donuts = donutServ.getDonutList();
+		if(donuts != null) {
+			res.setStatus(200);
+		} else {
+			res.setStatus(500);
+		}
+		return donuts;
 	}
 
 	@GetMapping("donuts/{id}")
