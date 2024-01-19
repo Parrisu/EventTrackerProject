@@ -1,0 +1,19 @@
+<div class="container">
+  <h1>HOME</h1>
+  <table class="table">
+    <thead>
+      <tr class="table-dark">
+        <th>
+          ID
+        </th>
+        <th>Before We Get Started</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let donut of donuts">
+        <td>{{donut.id}}</td>
+        <td>{{donut.name}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
