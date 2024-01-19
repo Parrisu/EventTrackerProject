@@ -28,7 +28,7 @@ function init(){
 			};
 		};
 		
-		xhr.open('GET', '/api/donuts');
+		xhr.open('GET', 'api/donuts');
 		
 		xhr.send();
 };
