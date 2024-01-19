@@ -59,8 +59,8 @@ class DonutTest {
 	
 	@Test
 	void test_donut_store_mapping() {
-		assertEquals("Rolling Pin", donut.getStore().getName());
-		assertEquals("Camarillo", donut.getStore().getLocation());
+		assertEquals(store.getName(), donut.getStore().getName());
+		assertEquals(store.getLocation(), donut.getStore().getLocation());
 	}
 
 }
