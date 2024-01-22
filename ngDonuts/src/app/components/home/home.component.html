@@ -1,0 +1,199 @@
+<div class="container-fluid">
+  <div class="row my-5">
+    <div class="col">
+      <div class="card">
+        <div class="card-header">Amount Spent</div>
+        <div class="card-body">{{getCount(true)}}</div>
+        <div class="card-header">Calories Consumed</div>
+        <div class="card-body">{{getCount(false)}}</div>
+      </div>
+    </div>
+    <div *ngIf="!selected" class="col-6">
+      <h1>Donut Tracker</h1>
+      <table class="table table-hover" id="table">
+        <thead>
+          <tr class="table-dark">
+            <th>ID</th>
+            <th>Donut</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let donut of donuts" (click)="selectDonut(donut)">
+            <td>{{ donut.id }}</td>
+            <td>{{ donut.name }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div>
+        <h4>New Donut Form:</h4>
+        <form name="newDonutForm">
+          <div class="mb-3 row">
+            <label for="name" class="col-sm-2 col-form-label">Name</label>
+            <div class="col-sm-3">
+              <input
+                type="text"
+                name="name"
+                class="form-control"
+                [(ngModel)]="newDonut.name"
+              />
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="price" class="col-sm-2 col-form-label">Price</label>
+            <div class="col-sm-3">
+              <input
+                type="number"
+                name="price"
+                class="form-control"
+                [(ngModel)]="newDonut.price"
+              />
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="calories" class="col-sm-2 col-form-label"
+              >Calories</label
+            >
+            <div class="col-sm-3">
+              <input
+                type="number"
+                name="calories"
+                class="form-control"
+                [(ngModel)]="newDonut.calories"
+              />
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="store" class="col-sm-2 col-form-label">Store</label>
+            <div class="col-sm-3">
+              <select
+                class="form-select"
+                name="store"
+                [(ngModel)]="newDonut.store.id"
+              >
+                <option *ngFor="let store of stores" value="{{ store.id }}">
+                  {{ store.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <button
+            class="btn btn-primary mx-5 py-2"
+            (click)="addDonut(newDonut); edit()"
+          >
+            Add Donut
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="col"></div>
+
+    <div *ngIf="selected" class="container py-5">
+      <button class="btn btn-dark my-2" (click)="selected = null; edit()">
+        Back
+      </button>
+      <table class="table table-hover">
+        <thead>
+          <tr class="table-dark">
+            <th colspan="2">
+              {{ selected.name }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>ID:</th>
+            <td>{{ selected.id }}</td>
+          </tr>
+          <tr>
+            <th>Name:</th>
+            <td>{{ selected.name }}</td>
+          </tr>
+          <tr>
+            <th>Calories:</th>
+            <td>{{ selected.calories }}</td>
+          </tr>
+          <tr>
+            <th>Price:</th>
+            <td>{{ selected.price }}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td>
+              <button class="btn btn-danger" (click)="deleteDonut(selected.id)">
+                Delete
+              </button>
+            </td>
+            <td>
+              <button
+                class="btn btn-primary"
+                (click)="toEdit = true; setToUpdate()"
+              >
+                Edit
+              </button>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <div *ngIf="selected && toEdit">
+      <h4>Edit Form:</h4>
+      <form name="editDonutForm">
+        <div class="mb-3 row">
+          <label for="name" class="col-sm-2 col-form-label">Name</label>
+          <div class="col-sm-3">
+            <input
+              type="text"
+              name="name"
+              class="form-control"
+              [(ngModel)]="toUpdate.name"
+            />
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="price" class="col-sm-2 col-form-label">Price</label>
+          <div class="col-sm-3">
+            <input
+              type="number"
+              name="price"
+              class="form-control"
+              [(ngModel)]="toUpdate.price"
+            />
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="calories" class="col-sm-2 col-form-label">Calories</label>
+          <div class="col-sm-3">
+            <input
+              type="number"
+              name="calories"
+              class="form-control"
+              [(ngModel)]="toUpdate.calories"
+            />
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="store" class="col-sm-2 col-form-label">Store</label>
+          <div class="col-sm-3">
+            <select
+              class="form-select"
+              name="store"
+              [(ngModel)]="toUpdate.store.id"
+            >
+              <option *ngFor="let store of stores" value="{{ store.id }}">
+                {{ store.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <button
+          class="btn btn-primary mx-5 py-2"
+          (click)="updateDonut(toUpdate.id, toUpdate); edit()"
+        >
+          Save Donut
+        </button>
+        <button class="btn btn-dark mx-5 py-2" (click)="edit()">Cancel</button>
+      </form>
+    </div>
+  </div>
+</div>
