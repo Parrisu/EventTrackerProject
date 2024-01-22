@@ -95,6 +95,11 @@ IDE: STS4, Eclipse <br>
     
 </p>
 
+#### Angular
+<p>
+    Introducing Angular to the project was like learning all over again. From implimenting HttpClient calls to converting JSON into models that I can use throughout the site. I really liked being able to see changes happen instantly when testing code, however angular's error messages can be a bit uninformative. The hardest part was using Typescript and trying to follow the pipeline of what data types were being returned. But eventually, the reactive site started flowing together in a way that I really enjoyed.
+</p>
+
 
 
 ### Stretch Goals
