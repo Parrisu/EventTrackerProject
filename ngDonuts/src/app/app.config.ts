@@ -12,6 +12,7 @@ export const appConfig: ApplicationConfig = {
       withHashLocation()
       ),
     provideHttpClient(),
-    RouterLink, DatePipe
+    RouterLink,
+    DatePipe,
   ]
 };

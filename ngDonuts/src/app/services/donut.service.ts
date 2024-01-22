@@ -40,7 +40,6 @@ export class DonutService {
           'Content-Type':  'application/json',
         }
       }
-      console.log(newDonut)
       return this.http.post<Donut>(this.url, newDonut, httpOptions).pipe(
         catchError((err: any) => {
           console.error(err);
@@ -52,11 +51,6 @@ export class DonutService {
     }
 
     update(id: number, donut: Donut): Observable<Donut> {
-      if(donut){
-        this.donut.updatedAt = this.datePipe.transform(Date.now(), 'shortDate', 'en-US')!;
-      } else {
-        this.donut.updatedAt = "";
-      }
       return this.http.put<Donut>(this.url +'/'+ id, donut).pipe(
         catchError((err: any) => {
           console.error(err);
